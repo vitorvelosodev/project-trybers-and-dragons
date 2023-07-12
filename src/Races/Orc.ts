@@ -1,13 +1,13 @@
 import Race from './Race';
 
-class Dwarf extends Race {
+class Orc extends Race {
   private _maxLifePoints : number;
   protected static counter = 0;
 
   constructor(nameArg: string, dexArg: number) {
     super(nameArg, dexArg);
-    this._maxLifePoints = 80;
-    Dwarf.counter += 1;
+    this._maxLifePoints = 74;
+    Orc.counter += 1;
   }
 
   get maxLifePoints(): number {
@@ -15,8 +15,8 @@ class Dwarf extends Race {
   }
 
   static createdRacesInstances() {
-    return Dwarf.counter;
+    return Orc.counter;
   }
 }
 
-export default Dwarf;
+export default Orc;

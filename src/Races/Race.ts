@@ -1,6 +1,6 @@
 abstract class Race {
-  protected _name : string;
-  protected _dexterity : number;
+  private _name : string;
+  private _dexterity : number;
 
   constructor(nameArg : string, dexArg : number) {
     this._name = nameArg;
@@ -19,7 +19,7 @@ abstract class Race {
     throw new Error('Not implemented');
   }
 
-  abstract maxLifePoints() : number;
+  abstract get maxLifePoints() : number;
 }
 
 export default Race;
