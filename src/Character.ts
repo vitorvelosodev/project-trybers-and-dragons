@@ -12,8 +12,9 @@ class Character implements Fighter {
   protected _strength: number;
   protected _defense: number;
   protected _dexterity: number;
-  protected readonly _energy?: Energy;
+  private readonly _energy?: Energy;
   protected _name: string;
+  protected _specialPowerPoint = 2;
 
   constructor(name: string) {
     this._dexterity = getRandomInt(1, 10);
@@ -54,7 +55,7 @@ class Character implements Fighter {
 
   get energy(): Energy | undefined {
     if (this._energy) {
-      return this._energy;
+      return { type_: this._energy.type_, amount: this._energy.amount };
     }
   }
 
@@ -67,19 +68,40 @@ class Character implements Fighter {
   }
 
   attack(enemy: Fighter): void {
-    throw new Error('Method not implemented.');
+    enemy.receiveDamage(this._strength);
   }
 
   special?(enemy: Fighter): void {
-    throw new Error('Method not implemented.');
+    const accuracy = getRandomInt(1, 10);
+    if (accuracy < 3 || this._specialPowerPoint > 0) {
+      enemy.receiveDamage(enemy.lifePoints);
+    }
+    this._specialPowerPoint -= 1;
   }
 
   levelUp(): void {
-    throw new Error('Method not implemented.');
+    this._maxLifePoints += getRandomInt(1, 10);
+    this._strength += getRandomInt(1, 10);
+    this._dexterity += getRandomInt(1, 10);
+    this._defense += getRandomInt(1, 10);
+    if (this._energy) {
+      this._energy.amount = 10;
+    }
+    if (this._maxLifePoints > this._race.maxLifePoints) {
+      this._maxLifePoints = this._race.maxLifePoints;
+    }
+    this._lifePoints = this._maxLifePoints;
   }
 
   receiveDamage(attackPoints: number): number {
-    throw new Error('Method not implemented.');
+    const damage = attackPoints - this._defense;
+    if (damage > 0) {
+      this._lifePoints -= damage;
+    }
+    if (this._lifePoints <= 0) {
+      this._lifePoints = -1;
+    }
+    return this._lifePoints;
   }
 }
 
