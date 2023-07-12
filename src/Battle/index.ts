@@ -1,6 +1,3 @@
-// import Battle from './Battle';
+import Battle from './Battle';
 
-// export default Battle;
-
-
-// New PR
+export default Battle;
